@@ -131,14 +131,13 @@
 						request({
 							url: dropsList[i].url + '+'
 						}, function() {
-							console.log('Downloaded drop ' + i + '/' + dropsList.length + ' (' + path + ')');
+							console.log('Downloaded drop ' + (i+1) + '/' + dropsList.length + ' (' + path + ')');
+							i++;
 							next();
 						}).pipe(file);
 					});
-
-					i++;
 		    	} else {
-		    		console.log("Skipping drop " + i + '/' + dropsList.length + ", it's a link");
+		    		console.log("Skipping drop " + (i+1) + '/' + dropsList.length + ", it's a link");
 		    		i++;
 		    		next();
 		    	}
