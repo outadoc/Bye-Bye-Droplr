@@ -130,18 +130,28 @@
 		    		//if it's a note, add the correct extension
 		    		if(dropsList[i].type == 'note') filename += ".txt";
 
-			        var path = "./download/" + dropsList[i].type + '/' + filename,
-						file = fs.createWriteStream(path);
+			        var path = "./download/" + dropsList[i].type + '/' + filename;
 					
-					file.on('open', function() {
-						//ceci n'est pas un pipe
-						request({
-							url: dropsList[i].url + '+'
-						}, function() {
-							console.log('Downloaded drop ' + (i+1) + '/' + dropsList.length + ' (' + path + ')');
+					fs.exists(path, function(exists) {
+			        	//if the file exists already, don't download it
+						if(!exists) {
+							var file = fs.createWriteStream(path);
+					
+							file.on('open', function() {
+								//ceci n'est pas un pipe
+								request({
+									url: dropsList[i].url + '+'
+								}, function() {
+									console.log('Downloaded drop ' + (i+1) + '/' + dropsList.length + ' (' + path + ')');
+									i++;
+									next();
+								}).pipe(file);
+							});
+						} else {
+							console.log("Skipping drop " + (i+1) + '/' + dropsList.length + ", it's already on the filesystem");
 							i++;
-							next();
-						}).pipe(file);
+		    				next();
+						}
 					});
 		    	} else {
 		    		console.log("Skipping drop " + (i+1) + '/' + dropsList.length + ", it's a link");
