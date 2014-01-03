@@ -2,7 +2,7 @@
 
 ## Wait, wut?
 
-The Droplr file sharing system decided to discontinue all free accounts without giving them a way to retrieve their data, which shall be deleted after the end of the trial period.
+The Droplr file sharing system decided to discontinue all free accounts without giving them a way to retrieve their data easily.
 
 **This script will therefore allow you to download all the files you stored on Droplr.**
 
