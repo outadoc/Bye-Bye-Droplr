@@ -122,8 +122,15 @@
 		    function (next) {
 		    	//don't save it if it's a just a link
 		    	if(dropsList[i].type != 'link') {
-		    		//eg. "download/image/KbZt_Screen Shot 2014-01-03 at 02.55.07.png"
-			        var path = "./download/" + dropsList[i].type + '/' + dropsList[i].code + '_' + dropsList[i].title,
+		    		//eg. "download/image/KbZt_Screen_Shot_2014-01-03_at_02.55.07.png"
+		    		var filename = dropsList[i].code + '_' + dropsList[i].title;
+		    		
+		    		//remove illegal characters from filename
+		    		filename = filename.replace(/[\\/:""*?<>| ]/g, '_');
+		    		//if it's a note, add the correct extension
+		    		if(dropsList[i].type == 'note') filename += ".txt";
+
+			        var path = "./download/" + dropsList[i].type + '/' + filename,
 						file = fs.createWriteStream(path);
 					
 					file.on('open', function() {
