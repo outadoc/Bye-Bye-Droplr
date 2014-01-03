@@ -138,6 +138,8 @@
 
 					i++;
 		    	} else {
+		    		console.log("Skipping drop " + i + '/' + dropsList.length + ", it's a link");
+		    		i++;
 		    		next();
 		    	}
 		    },
