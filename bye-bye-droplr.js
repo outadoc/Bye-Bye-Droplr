@@ -6,6 +6,7 @@
 		fs = require('fs'),
 
 		baseUrl = 'https://droplr.com',
+		downloadFolder = __dirname + '/download',
 		username, password,
 
 		cookieJar = request.jar(),
@@ -130,7 +131,7 @@
 		    		//if it's a note, add the correct extension
 		    		if(dropsList[i].type == 'note') filename += ".txt";
 
-			        var path = __dirname + "/download/" + dropsList[i].type + '/' + filename;
+			        var path = downloadFolder + '/' + dropsList[i].type + '/' + filename;
 					
 					fs.exists(path, function(exists) {
 			        	//if the file exists already, don't download it
@@ -169,22 +170,22 @@
 	function initDirStructure(callback) {
 		async.parallel([
 			function(callback){
-		        fs.mkdir('./download', callback);
+		        fs.mkdir(downloadFolder, callback);
 		    },
 		    function(callback){
-		        fs.mkdir('./download/image/', callback);
+		        fs.mkdir(downloadFolder + '/image/', callback);
 		    },
 		    function(callback){
-		        fs.mkdir('./download/audio/', callback);
+		        fs.mkdir(downloadFolder + '/audio/', callback);
 		    },
 		    function(callback){
-		        fs.mkdir('./download/video/', callback);
+		        fs.mkdir(downloadFolder + '/video/', callback);
 		    },
 		    function(callback){
-		        fs.mkdir('./download/note/', callback);
+		        fs.mkdir(downloadFolder + '/note/', callback);
 		    },
 		    function(callback){
-		        fs.mkdir('./download/file/', callback);
+		        fs.mkdir(downloadFolder + '/file/', callback);
 		    },
 		], callback);
 	}
