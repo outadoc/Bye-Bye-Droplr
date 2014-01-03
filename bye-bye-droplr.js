@@ -120,21 +120,26 @@
 		async.whilst(
 		    function () { return i < dropsList.length; },
 		    function (next) {
-		        //eg. "download/image/KbZt_Screen Shot 2014-01-03 at 02.55.07.png"
-		        var path = "./download/" + dropsList[i].type + '/' + dropsList[i].code + '_' + dropsList[i].title,
-					file = fs.createWriteStream(path);
-				
-				file.on('open', function() {
-					//ceci n'est pas un pipe
-					request({
-						url: dropsList[i].url + '+'
-					}, function() {
-						console.log('Downloaded drop ' + i + '/' + dropsList.length + ' (' + path + ')');
-						next();
-					}).pipe(file);
-				});
+		    	//don't save it if it's a just a link
+		    	if(dropsList[i].type != 'link') {
+		    		//eg. "download/image/KbZt_Screen Shot 2014-01-03 at 02.55.07.png"
+			        var path = "./download/" + dropsList[i].type + '/' + dropsList[i].code + '_' + dropsList[i].title,
+						file = fs.createWriteStream(path);
+					
+					file.on('open', function() {
+						//ceci n'est pas un pipe
+						request({
+							url: dropsList[i].url + '+'
+						}, function() {
+							console.log('Downloaded drop ' + i + '/' + dropsList.length + ' (' + path + ')');
+							next();
+						}).pipe(file);
+					});
 
-				i++;
+					i++;
+		    	} else {
+		    		next();
+		    	}
 		    },
 		    function (err) {
 		        callback();
@@ -159,9 +164,6 @@
 		    },
 		    function(callback){
 		        fs.mkdir('./download/note/', callback);
-		    },
-		    function(callback){
-		        fs.mkdir('./download/link/', callback);
 		    },
 		    function(callback){
 		        fs.mkdir('./download/file/', callback);
