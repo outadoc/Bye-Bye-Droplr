@@ -130,7 +130,7 @@
 		    		//if it's a note, add the correct extension
 		    		if(dropsList[i].type == 'note') filename += ".txt";
 
-			        var path = "./download/" + dropsList[i].type + '/' + filename;
+			        var path = __dirname + "/download/" + dropsList[i].type + '/' + filename;
 					
 					fs.exists(path, function(exists) {
 			        	//if the file exists already, don't download it
